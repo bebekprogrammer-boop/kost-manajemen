@@ -1,0 +1,62 @@
+@extends('layouts.admin')
+@section('title', 'Tambah Kamar')
+@section('header', 'Tambah Kamar Baru')
+
+@section('content')
+<div class="bg-white p-6 rounded shadow max-w-3xl">
+    <form action="{{ route('admin.rooms.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+        @csrf
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-gray-700">No. Kamar</label>
+                <input type="text" name="room_number" value="{{ old('room_number') }}" required class="w-full border-gray-300 rounded mt-1">
+                @error('room_number') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
+            <div>
+                <label class="block text-gray-700">Tipe</label>
+                <select name="type" required class="w-full border-gray-300 rounded mt-1">
+                    <option value="regular">Regular</option>
+                    <option value="vip">VIP</option>
+                    <option value="vvip">VVIP</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-gray-700">Harga (Rp)</label>
+                <input type="number" name="price" value="{{ old('price') }}" required min="0" class="w-full border-gray-300 rounded mt-1">
+            </div>
+            <div>
+                <label class="block text-gray-700">Lantai</label>
+                <input type="number" name="floor" value="{{ old('floor', 1) }}" required min="1" class="w-full border-gray-300 rounded mt-1">
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-gray-700">Fasilitas</label>
+            <div class="mt-2 grid grid-cols-3 gap-2">
+                @foreach(['AC', 'Kamar Mandi Dalam', 'WiFi', 'TV', 'Lemari', 'Kasur Springbed', 'Meja Belajar'] as $fasilitas)
+                <label class="inline-flex items-center">
+                    <input type="checkbox" name="facilities[]" value="{{ $fasilitas }}" class="rounded border-gray-300 text-blue-600">
+                    <span class="ml-2">{{ $fasilitas }}</span>
+                </label>
+                @endforeach
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-gray-700">Deskripsi</label>
+            <textarea name="description" rows="3" class="w-full border-gray-300 rounded mt-1">{{ old('description') }}</textarea>
+        </div>
+
+        <div>
+            <label class="block text-gray-700">Upload Foto (Bisa lebih dari 1)</label>
+            <input type="file" name="photos[]" multiple accept="image/*" class="w-full mt-1">
+            @error('photos.*') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-4">
+            <a href="{{ route('admin.rooms.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Batal</a>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan Kamar</button>
+        </div>
+    </form>
+</div>
+@endsection
