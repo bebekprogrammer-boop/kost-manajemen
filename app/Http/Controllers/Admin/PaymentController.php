@@ -44,7 +44,7 @@ class PaymentController extends Controller
         // Kalkulasi denda berjalan (simulasi hari ini) jika belum dibayar
         $currentPenalty = 0;
         if ($payment->status === 'unpaid') {
-            $daysLate = max(0, now()->diffInDays($payment->tenant->due_date, false) * -1);
+            $daysLate = max(0, today()->diffInDays(\Carbon\Carbon::parse($payment->tenant->due_date)->startOfDay(), false) * -1);
             $currentPenalty = $daysLate * config('app.penalty_per_day', 5000);
         }
 

@@ -17,23 +17,51 @@ class Tenant extends Model
         ];
     }
 
-    protected static function booted()
+   protected static function booted()
     {
-        // Hitung due_date otomatis saat dibuat
-        static::creating(function ($tenant) { // [cite: 101]
-            $tenant->due_date = Carbon::parse($tenant->check_in_date)->addMonths((int) $tenant->rent_duration);
+        static::creating(function ($tenant) {
+            if ($tenant->check_in_date && $tenant->rent_duration) {
+                $tenant->due_date = \Carbon\Carbon::parse($tenant->check_in_date)->addDays((int) $tenant->rent_duration);
+            }
         });
 
-        // Update status kamar otomatis setelah tenant disimpan/diubah statusnya
-        static::saved(function ($tenant) { // [cite: 102]
-            $tenant->room->updateStatus(); // [cite: 102]
+        // Trigger saat tenant baru dibuat atau diedit
+        static::saved(function ($tenant) {
+            // Update status kamar yang sekarang
+            if ($tenant->room) {
+                $tenant->room->updateStatus();
+            }
+
+            // Jika tenant dipindah ke kamar lain (edit room_id), update juga kamar lamanya
+            if ($tenant->isDirty('room_id') && $tenant->getOriginal('room_id')) {
+                $oldRoom = \App\Models\Room::find($tenant->getOriginal('room_id'));
+                if ($oldRoom) {
+                    $oldRoom->updateStatus();
+                }
+            }
+        });
+
+        // Trigger saat data tenant dihapus dari sistem
+        static::deleted(function ($tenant) {
+            if ($tenant->room) {
+                $tenant->room->updateStatus();
+            }
         });
     }
 
     // Accessor untuk sisa hari
     public function getDaysUntilDueAttribute()
     {
-        return now()->diffInDays($this->due_date, false); // [cite: 107]
+        if (!$this->due_date) return 0;
+
+        // Gunakan today() agar jam dikunci di 00:00:00
+        $sekarang = \Carbon\Carbon::today();
+        $jatuhTempo = \Carbon\Carbon::parse($this->due_date)->startOfDay();
+
+        // Paksa hasil perhitungan menjadi tipe data Integer (bilangan bulat)
+        $selisihHari = $sekarang->diffInDays($jatuhTempo, false);
+
+        return (int) round($selisihHari);
     }
 
     public function room()

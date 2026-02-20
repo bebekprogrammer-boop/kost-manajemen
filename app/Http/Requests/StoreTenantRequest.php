@@ -20,7 +20,7 @@ class StoreTenantRequest extends FormRequest
             'id_card_number' => 'nullable|string|max:50',
             'id_card_photo' => 'nullable|image|max:5120',
             'check_in_date' => 'required|date',
-            'rent_duration' => 'required|integer|in:1,3,6,12',
+            'rent_duration' => 'required|integer|in:1,2,3,7,30,90,180,365',
             'notes' => 'nullable|string'
         ];
 

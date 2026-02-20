@@ -26,12 +26,11 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+       $request->session()->regenerate();
+        auth()->user()->update(['last_login_at' => now()]);
 
-        auth()->user()->update(['last_login_at' => now()]); //
-
-        return redirect()->intended(route('dashboard', absolute: false));
-        return redirect()->intended(route('dashboard', absolute: false));
+        // INI YANG BENAR
+        return redirect()->intended(route('admin.dashboard', absolute: false));
     }
 
     /**

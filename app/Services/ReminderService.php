@@ -69,7 +69,7 @@ class ReminderService
             case 'h0':
                 return "Halo {$name}, 🔴 HARI INI batas pembayaran sewa Kamar {$roomName}. Total tagihan: Rp {$amount}. Segera bayar untuk menghindari denda. Terima kasih!";
             case 'overdue':
-                $daysLate = max(0, now()->diffInDays($tenant->due_date, false) * -1);
+                $daysLate = max(0, today()->diffInDays(\Carbon\Carbon::parse($tenant->due_date)->startOfDay(), false) * -1);
                 $penalty = $daysLate * config('app.penalty_per_day', 5000);
                 $totalAmount = $payment ? $payment->amount + $penalty : 0;
                 $formattedTotal = number_format($totalAmount, 0, ',', '.');

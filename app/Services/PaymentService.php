@@ -61,10 +61,9 @@ class PaymentService
             'notes' => $notes
         ]);
 
-        // Perpanjang due_date tenant
+       // Perpanjang due_date tenant (Ubah menjadi addDays)
         $oldDueDate = $tenant->due_date;
-        $newDueDate = Carbon::parse($oldDueDate)->addMonths($tenant->rent_duration);
-
+        $newDueDate = Carbon::parse($oldDueDate)->addDays($tenant->rent_duration);
         // Disable event sementara agar status kamar tidak tereksekusi ulang tanpa perlu
         Tenant::withoutEvents(function () use ($tenant, $newDueDate) {
             $tenant->update(['due_date' => $newDueDate]);

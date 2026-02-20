@@ -11,7 +11,15 @@
         </div>
         <button type="submit" class="px-4 py-2 text-white transition bg-blue-600 rounded hover:bg-blue-700">Tampilkan</button>
     </form>
-    <button onclick="window.print()" class="px-4 py-2 text-white transition bg-gray-800 rounded hover:bg-gray-900">🖨️ Cetak Laporan</button>
+    <button type="submit" class="px-4 py-2 text-white transition bg-blue-600 rounded hover:bg-blue-700">Tampilkan</button>
+    </form>
+
+    <div class="flex space-x-2">
+        <a href="{{ route('admin.reports.csv', ['month' => $month]) }}" class="px-4 py-2 text-white transition bg-green-600 rounded hover:bg-green-700">📊 Download CSV</a>
+        <a href="{{ route('admin.reports.pdf', ['month' => $month]) }}" class="px-4 py-2 text-white transition bg-red-600 rounded hover:bg-red-700">📄 Download PDF</a>
+        <button onclick="window.print()" class="px-4 py-2 text-white transition bg-gray-800 rounded hover:bg-gray-900 print:hidden">🖨️ Cetak</button>
+    </div>
+
 </div>
 
 <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-3">

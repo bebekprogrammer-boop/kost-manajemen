@@ -39,6 +39,8 @@ Route::middleware(['auth', 'role:super_admin,owner,admin'])->group(function () {
     Route::resource('admin/payments', PaymentController::class)->names('admin.payments');
 
     Route::get('admin/reports', [ReportController::class, 'index'])->name('admin.reports.index');
+    Route::get('admin/reports/pdf', [ReportController::class, 'exportPdf'])->name('admin.reports.pdf');
+    Route::get('admin/reports/csv', [ReportController::class, 'exportCsv'])->name('admin.reports.csv');
 
     Route::resource('admin/expenses', ExpenseController::class)->names('admin.expenses');
 
