@@ -5,13 +5,14 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ExpenseController;
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\ReminderController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [PublicController::class, 'index'])->name('home'); // 
+Route::get('/', [PublicController::class, 'index'])->name('home'); //
 Route::get('/kamar/{room}', [PublicController::class, 'showRoom'])->name('room.detail'); //
 
 Route::middleware('auth')->group(function () {
@@ -34,9 +35,12 @@ Route::middleware(['auth', 'role:super_admin,owner,admin'])->group(function () {
     Route::get('admin/payments/{payment}/invoice', [PaymentController::class, 'generateInvoice'])->name('admin.payments.invoice'); // [cite: 195]
     Route::resource('admin/payments', PaymentController::class)->names('admin.payments');
 
-    // Di dalam blok Route::middleware(['auth', 'role:super_admin,owner,admin'])->group(...) :
+
     Route::resource('admin/expenses', ExpenseController::class)->names('admin.expenses');
-    
+
+    Route::get('admin/reminders', [ReminderController::class, 'index'])->name('admin.reminders.index');
+    Route::post('admin/reminders/log', [ReminderController::class, 'log'])->name('admin.reminders.log');
+
     Route::middleware('role:super_admin,owner')->group(function () {
     Route::resource('admin/users', UserController::class)->names('admin.users');
     });

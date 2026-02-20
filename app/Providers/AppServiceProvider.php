@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\PaymentService;
+use App\Services\ReminderService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,6 +15,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(PaymentService::class, function ($app) {
         return new PaymentService();
+
+        $this->app->singleton(ReminderService::class, function ($app) {
+            return new ReminderService();
+        });
     });
     }
 

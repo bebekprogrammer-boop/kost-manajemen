@@ -21,7 +21,7 @@ class Tenant extends Model
     {
         // Hitung due_date otomatis saat dibuat
         static::creating(function ($tenant) { // [cite: 101]
-            $tenant->due_date = Carbon::parse($tenant->check_in_date)->addMonths($tenant->rent_duration); // [cite: 101]
+            $tenant->due_date = Carbon::parse($tenant->check_in_date)->addMonths((int) $tenant->rent_duration);
         });
 
         // Update status kamar otomatis setelah tenant disimpan/diubah statusnya
