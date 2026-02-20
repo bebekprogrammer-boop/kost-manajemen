@@ -27,13 +27,13 @@
                 <a href="{{ route('admin.payments.index') }}" class="px-4 py-3 hover:bg-blue-800 {{ request()->routeIs('admin.payments.*') ? 'bg-blue-700' : '' }}">Pembayaran</a>
                 <a href="{{ route('admin.expenses.index') }}" class="px-4 py-3 hover:bg-blue-800 {{ request()->routeIs('admin.expenses.*') ? 'bg-blue-700' : '' }}">Pengeluaran</a>
                 <a href="{{ route('admin.reminders.index') }}" class="px-4 py-3 hover:bg-blue-800 {{ request()->routeIs('admin.reminders.*') ? 'bg-blue-700' : '' }}">Reminder WA</a>
-                <a href="#" class="px-4 py-3 hover:bg-blue-800 {{ request()->routeIs('admin.reports.*') ? 'bg-blue-700' : '' }}">Laporan</a>
+                <a href="{{ route('admin.reports.index') }}" class="px-4 py-3 hover:bg-blue-800 {{ request()->routeIs('admin.reports.*') ? 'bg-blue-700' : '' }}">Laporan</a>
 
                 @if(auth()->user()->role === 'super_admin')
-                <a href="#" class="px-4 py-3 hover:bg-blue-800 {{ request()->routeIs('admin.activity-logs.*') ? 'bg-blue-700' : '' }}">Log Aktivitas</a>
+                <a href="{{ route('admin.activity-logs.index') }}" class="px-4 py-3 hover:bg-blue-800 {{ request()->routeIs('admin.activity-logs.*') ? 'bg-blue-700' : '' }}">Log Aktivitas</a>
                 @endif
 
-                <a href="#" class="px-4 py-3 hover:bg-blue-800 {{ request()->routeIs('admin.settings.*') ? 'bg-blue-700' : '' }}">Pengaturan</a>
+                <a href="{{ route('admin.settings.index') }}" class="px-4 py-3 hover:bg-blue-800 {{ request()->routeIs('admin.settings.*') ? 'bg-blue-700' : '' }}">Pengaturan</a>
             </nav>
         </div>
 
