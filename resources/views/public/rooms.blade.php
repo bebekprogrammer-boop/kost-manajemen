@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kamar {{ $room->room_number }} – {{ env('KOST_NAME', 'KOST-MANAJEMEN') }}</title>
+    <title>Kamar – {{ env('KOST_NAME', 'KOST-MANAJEMEN') }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -103,7 +103,8 @@
         /* ─── PAGE HEADER ─── */
         .page-header {
             background: linear-gradient(135deg, var(--blue-deeper) 0%, var(--blue-dark) 45%, #1d4ed8 100%);
-            padding: 5.5rem 1.5rem 2rem;
+            padding: 5.5rem 1.5rem 0;
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
@@ -123,275 +124,215 @@
                 linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
             background-size: 56px 56px;
         }
-        .header-inner {
+        .header-content {
             position: relative;
             z-index: 1;
-            max-width: 1152px;
-            margin: 0 auto;
+            padding-bottom: 1.5rem;
         }
-
-        .breadcrumb {
+        .section-pill {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
-            font-size: 0.75rem;
-            color: #93c5fd;
-            margin-bottom: 0.75rem;
-            font-weight: 500;
+            background: rgba(255,255,255,0.15);
+            color: #e0f2fe;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 0.22rem 0.75rem;
+            border-radius: 999px;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 0.4rem;
         }
-        .breadcrumb a { color: #93c5fd; transition: color 0.2s; }
-        .breadcrumb a:hover { color: #fff; }
-        .breadcrumb span { color: rgba(255,255,255,0.4); }
-
         .page-header h1 {
-            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
             font-weight: 900;
             color: #fff;
             letter-spacing: -0.02em;
-            line-height: 1.1;
         }
         .page-header h1 span { color: var(--green-accent); }
+        .page-header p {
+            color: #bfdbfe;
+            font-size: 0.82rem;
+            margin-top: 0.3rem;
+        }
 
-        .header-badges {
+        /* ─── FILTER BAR — menyatu dengan header ─── */
+        .filter-bar {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            padding: 0.9rem 1.5rem 0;
+      
+        }
+        .filter-btn {
+            padding: 0.38rem 1.1rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1.5px solid transparent;
+            white-space: nowrap;
+        }
+        .filter-btn.active {
+            background: var(--blue-primary);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(29,78,216,0.3);
+        }
+        .filter-btn:not(.active) {
+            background: #fff;
+            color: #475569;
+            border-color: #e0e7ff;
+        }
+        .filter-btn:not(.active):hover {
+            border-color: var(--blue-mid);
+            color: var(--blue-primary);
+        }
+
+        /* ─── COMPACT ROOM CARDS ─── */
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.85rem;
+        }
+        @media (max-width: 900px) { .rooms-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 580px) { .rooms-grid { grid-template-columns: 1fr; } }
+
+        .room-card {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #e0e7ff;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.22s, box-shadow 0.22s;
+        }
+        .room-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 36px rgba(29,78,216,0.11);
+        }
+
+        .room-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+        .room-img-placeholder {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #e0e7ff, #dbeafe);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #93c5fd;
+        }
+
+        .room-body {
+            padding: 0.75rem 0.875rem 0.875rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        .room-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .room-number {
+            font-size: 0.88rem;
+            font-weight: 900;
+            color: #0f172a;
         }
         .type-badge {
-            font-size: 0.68rem;
+            font-size: 0.6rem;
             font-weight: 800;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.07em;
             text-transform: uppercase;
-            padding: 0.25rem 0.7rem;
+            padding: 0.16rem 0.5rem;
             border-radius: 999px;
         }
         .type-vvip    { background: #ede9fe; color: #6d28d9; }
         .type-vip     { background: var(--blue-light); color: var(--blue-primary); }
         .type-regular { background: #f1f5f9; color: #475569; }
 
-        .status-available { background: #dcfce7; color: #15803d; font-size: 0.68rem; font-weight: 700; padding: 0.25rem 0.7rem; border-radius: 999px; }
-        .status-full      { background: #fee2e2; color: #dc2626; font-size: 0.68rem; font-weight: 700; padding: 0.25rem 0.7rem; border-radius: 999px; }
-
-        .floor-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            background: rgba(255,255,255,0.15);
-            color: #e0f2fe;
-            font-size: 0.68rem;
-            font-weight: 600;
-            padding: 0.25rem 0.7rem;
-            border-radius: 999px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        /* ─── MAIN CONTENT ─── */
-        .content-wrapper {
-            max-width: 1152px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem 3rem;
-            display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 1.5rem;
-            align-items: start;
-        }
-        @media (max-width: 860px) {
-            .content-wrapper { grid-template-columns: 1fr; }
-        }
-
-        /* ─── GALLERY ─── */
-        .gallery-wrap {
-            background: #fff;
-            border-radius: 16px;
-            border: 1px solid #e0e7ff;
-            overflow: hidden;
-        }
-        .gallery-scroll {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none;
-        }
-        .gallery-scroll::-webkit-scrollbar { display: none; }
-        .gallery-scroll img {
-            flex-shrink: 0;
-            width: 100%;
-            height: 320px;
-            object-fit: cover;
-            scroll-snap-align: center;
-        }
-        .gallery-placeholder {
-            width: 100%;
-            height: 320px;
-            background: linear-gradient(135deg, #e0e7ff, #dbeafe);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 0.5rem;
-            color: #93c5fd;
-            font-size: 3rem;
-        }
-        .gallery-placeholder p { font-size: 0.8rem; font-weight: 500; }
-
-        /* ─── DESCRIPTION ─── */
-        .desc-card {
-            background: #fff;
-            border-radius: 16px;
-            border: 1px solid #e0e7ff;
-            padding: 1.5rem;
-            margin-top: 1rem;
-        }
-        .card-title {
-            font-size: 0.82rem;
-            font-weight: 800;
-            color: var(--blue-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.07em;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .card-title::before {
-            content: '';
-            display: inline-block;
-            width: 3px;
-            height: 14px;
-            background: var(--blue-primary);
-            border-radius: 2px;
-        }
-        .desc-text {
-            font-size: 0.875rem;
-            color: #475569;
-            line-height: 1.75;
-        }
-
-        /* ─── FACILITIES ─── */
-        .facilities-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.5rem;
-        }
-        .facility-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.82rem;
-            color: #334155;
-            padding: 0.5rem 0.65rem;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-        }
-        .facility-check {
-            width: 18px; height: 18px;
-            background: var(--blue-light);
-            color: var(--blue-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.6rem;
-            font-weight: 900;
-            flex-shrink: 0;
-        }
-
-        /* ─── SIDEBAR ─── */
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            position: sticky;
-            top: 80px;
-        }
-
-        .price-card {
-            background: #fff;
-            border-radius: 16px;
-            border: 1px solid #e0e7ff;
-            padding: 1.5rem;
-        }
-        .price-label {
-            font-size: 0.72rem;
-            color: #94a3b8;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.25rem;
-        }
-        .price-value {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--blue-primary);
-            letter-spacing: -0.03em;
-            line-height: 1;
-        }
-        .price-value span {
-            font-size: 0.85rem;
-            font-weight: 400;
-            color: #94a3b8;
-        }
-        .price-divider {
-            border: none;
-            border-top: 1px solid #e0e7ff;
-            margin: 1rem 0;
-        }
-
-        .btn-wa {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            width: 100%;
-            padding: 0.85rem;
-            border-radius: 10px;
-            font-weight: 800;
-            font-size: 0.9rem;
-            background: #22c55e;
-            color: #fff;
-            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-            box-shadow: 0 4px 18px rgba(34,197,94,0.25);
-        }
-        .btn-wa:hover {
-            background: #16a34a;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(34,197,94,0.35);
-        }
-
-        .btn-back {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-            width: 100%;
-            padding: 0.7rem;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.82rem;
-            border: 1.5px solid #e0e7ff;
-            color: #475569;
-            transition: border-color 0.2s, color 0.2s, background 0.2s;
-        }
-        .btn-back:hover {
-            border-color: var(--blue-mid);
-            color: var(--blue-primary);
-            background: var(--blue-light);
-        }
-
-        .info-row {
+        .room-mid {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 0.8rem;
-            padding: 0.4rem 0;
-            border-bottom: 1px solid #f1f5f9;
         }
-        .info-row:last-child { border-bottom: none; }
-        .info-row .label { color: #94a3b8; font-weight: 500; }
-        .info-row .value { color: #1e293b; font-weight: 700; }
+        .room-price {
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: var(--blue-primary);
+            letter-spacing: -0.02em;
+            line-height: 1;
+        }
+        .room-price span { font-size: 0.65rem; font-weight: 400; color: #94a3b8; }
+
+        .status-available { background: #dcfce7; color: #15803d; font-size: 0.62rem; font-weight: 700; padding: 0.16rem 0.5rem; border-radius: 999px; }
+        .status-full      { background: #fee2e2; color: #dc2626; font-size: 0.62rem; font-weight: 700; padding: 0.16rem 0.5rem; border-radius: 999px; }
+
+        .room-facilities {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.2rem;
+        }
+        .room-facilities li {
+            font-size: 0.62rem;
+            color: #475569;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 0.12rem 0.45rem;
+            border-radius: 999px;
+        }
+
+        .room-actions {
+            display: flex;
+            gap: 0.35rem;
+            margin-top: auto;
+            padding-top: 0.5rem;
+            border-top: 1px solid #f1f5f9;
+        }
+        .btn-detail {
+            flex: 1;
+            text-align: center;
+            padding: 0.4rem 0.4rem;
+            border-radius: 7px;
+            font-weight: 700;
+            font-size: 0.68rem;
+            border: 1.5px solid var(--blue-primary);
+            color: var(--blue-primary);
+            transition: background 0.2s;
+        }
+        .btn-detail:hover { background: var(--blue-light); }
+        .btn-wa {
+            flex: 1;
+            text-align: center;
+            padding: 0.4rem 0.4rem;
+            border-radius: 7px;
+            font-weight: 700;
+            font-size: 0.68rem;
+            background: #22c55e;
+            color: #fff;
+            transition: background 0.2s;
+        }
+        .btn-wa:hover { background: #16a34a; }
+
+        /* ─── EMPTY STATE ─── */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: #94a3b8;
+            grid-column: 1 / -1;
+        }
+        .empty-state .emoji { font-size: 2.5rem; margin-bottom: 0.75rem; }
 
         /* ─── FOOTER ─── */
         footer { background: #0f172a; }
@@ -469,131 +410,81 @@
     <!-- ════ PAGE HEADER ════ -->
     <div class="page-header">
         <div class="page-header-grid"></div>
-        <div class="header-inner">
-            <div class="breadcrumb">
-                <a href="{{ route('home') }}">Beranda</a>
-                <span>/</span>
-                <a href="{{ route('rooms') }}">Kamar</a>
-                <span>/</span>
-                <span style="color:rgba(255,255,255,0.75);">Kamar {{ $room->room_number }}</span>
-            </div>
-            <h1>Kamar <span>{{ $room->room_number }}</span></h1>
-            <div class="header-badges">
-                <span class="type-badge type-{{ $room->type }}">Tipe {{ strtoupper($room->type) }}</span>
-                @if($room->status == 'available')
-                    <span class="status-available">● Tersedia</span>
-                @else
-                    <span class="status-full">● Penuh</span>
-                @endif
-                @if($room->floor)
-                    <span class="floor-badge">🏢 Lantai {{ $room->floor }}</span>
-                @endif
-            </div>
+        <div class="header-content">
+            <span class="section-pill">Pilihan Kamar</span>
+            <h1>Kamar <span>Tersedia</span></h1>
+            <p>Pilih tipe kamar yang sesuai kebutuhan dan anggaranmu</p>
         </div>
     </div>
 
-    <!-- ════ MAIN CONTENT ════ -->
-    <div class="content-wrapper">
+    <!-- Filter Bar — tepat di bawah header, transisi warna mulus -->
+    <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="vvip">VVIP</button>
+        <button class="filter-btn" data-filter="vip">VIP</button>
+        <button class="filter-btn" data-filter="regular">Reguler</button>
+    </div>
 
-        <!-- LEFT: Gallery + Desc + Facilities -->
-        <div>
-            <!-- Gallery -->
-            <div class="gallery-wrap">
-                <div class="gallery-scroll">
+    <!-- ════ DAFTAR KAMAR ════ -->
+    <section class="px-6 py-5">
+        <div class="max-w-6xl mx-auto">
+            <div class="rooms-grid" id="rooms-grid">
+                @forelse($rooms as $room)
+                <div class="room-card" data-type="{{ $room->type }}">
                     @if($room->photos && count($room->photos) > 0)
-                        @foreach($room->photos as $photo)
-                            <img src="{{ asset('storage/' . $photo) }}" alt="Foto Kamar {{ $room->room_number }}">
-                        @endforeach
+                        <img src="{{ asset('storage/' . $room->photos[0]) }}"
+                             alt="Kamar {{ $room->room_number }}" class="room-img">
                     @else
-                        <div class="gallery-placeholder">
-                            <span>🏠</span>
-                            <p>Belum ada foto kamar ini</p>
-                        </div>
+                        <div class="room-img-placeholder">🏠</div>
                     @endif
-                </div>
-                @if($room->photos && count($room->photos) > 1)
-                    <div style="padding:0.6rem 1rem;background:#f8fafc;border-top:1px solid #e0e7ff;font-size:0.72rem;color:#94a3b8;text-align:center;">
-                        ← Geser untuk foto selanjutnya ({{ count($room->photos) }} foto) →
-                    </div>
-                @endif
-            </div>
 
-            <!-- Description -->
-            <div class="desc-card">
-                <p class="card-title">Deskripsi Kamar</p>
-                <p class="desc-text">{{ $room->description ?? 'Tidak ada deskripsi spesifik untuk kamar ini.' }}</p>
-            </div>
-
-            <!-- Facilities -->
-            @if($room->facilities && count($room->facilities) > 0)
-            <div class="desc-card">
-                <p class="card-title">Fasilitas Lengkap</p>
-                <div class="facilities-grid">
-                    @foreach($room->facilities as $fasilitas)
-                        <div class="facility-item">
-                            <span class="facility-check">✓</span>
-                            {{ $fasilitas }}
+                    <div class="room-body">
+                        <div class="room-top">
+                            <span class="room-number">Kamar {{ $room->room_number }}</span>
+                            <span class="type-badge type-{{ $room->type }}">{{ strtoupper($room->type) }}</span>
                         </div>
-                    @endforeach
+
+                        <div class="room-mid">
+                            <div class="room-price">
+                                Rp {{ number_format($room->price, 0, ',', '.') }}
+                                <span>/ bln</span>
+                            </div>
+                            @if($room->status == 'available')
+                                <span class="status-available">● Tersedia</span>
+                            @else
+                                <span class="status-full">● Penuh</span>
+                            @endif
+                        </div>
+
+                        @if($room->facilities && count($room->facilities) > 0)
+                        <ul class="room-facilities">
+                            @foreach(array_slice($room->facilities, 0, 3) as $f)
+                                <li>{{ $f }}</li>
+                            @endforeach
+                            @if(count($room->facilities) > 3)
+                                <li style="background:#eff6ff;color:#60a5fa;border-color:#bfdbfe;">+{{ count($room->facilities) - 3 }}</li>
+                            @endif
+                        </ul>
+                        @endif
+
+                        <div class="room-actions">
+                            <a href="{{ route('room.detail', $room) }}" class="btn-detail">Detail</a>
+                            @php
+                                $waUrl = 'https://wa.me/' . env('ADMIN_PHONE') . '?text=' . urlencode('Halo Admin, saya tertarik dengan Kamar ' . $room->room_number . ' (' . strtoupper($room->type) . '). Apakah masih tersedia?');
+                            @endphp
+                            <a href="{{ $waUrl }}" target="_blank" class="btn-wa">💬 WhatsApp</a>
+                        </div>
+                    </div>
                 </div>
+                @empty
+                    <div class="empty-state">
+                        <div class="emoji">🏠</div>
+                        <p>Belum ada kamar tersedia saat ini.</p>
+                    </div>
+                @endforelse
             </div>
-            @endif
         </div>
-
-        <!-- RIGHT: Sidebar -->
-        <div class="sidebar">
-
-            <!-- Price + CTA -->
-            <div class="price-card">
-                <p class="price-label">Harga Sewa</p>
-                <div class="price-value">
-                    Rp {{ number_format($room->price, 0, ',', '.') }}
-                    <span>/ bulan</span>
-                </div>
-
-                <hr class="price-divider">
-
-                <div style="margin-bottom:1rem;">
-                    <div class="info-row">
-                        <span class="label">Nomor Kamar</span>
-                        <span class="value">{{ $room->room_number }}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="label">Tipe</span>
-                        <span class="value">{{ strtoupper($room->type) }}</span>
-                    </div>
-                    @if($room->floor)
-                    <div class="info-row">
-                        <span class="label">Lantai</span>
-                        <span class="value">{{ $room->floor }}</span>
-                    </div>
-                    @endif
-                    <div class="info-row">
-                        <span class="label">Status</span>
-                        <span class="value" style="color: {{ $room->status == 'available' ? '#15803d' : '#dc2626' }}">
-                            {{ $room->status == 'available' ? 'Tersedia' : 'Penuh' }}
-                        </span>
-                    </div>
-                </div>
-
-                @php
-                    $waUrl = 'https://wa.me/' . env('ADMIN_PHONE') . '?text=' . urlencode('Halo Admin, saya tertarik dengan Kamar ' . $room->room_number . ' (' . strtoupper($room->type) . '). Apakah masih tersedia?');
-                @endphp
-                <a href="{{ $waUrl }}" target="_blank" class="btn-wa">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    Hubungi via WhatsApp
-                </a>
-
-                <div style="margin-top:0.5rem;">
-                    <a href="{{ route('rooms') }}" class="btn-back">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-                        Kembali ke Daftar Kamar
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </div>
+    </section>
 
     <!-- ════ FOOTER ════ -->
     <footer class="px-6 py-12">
@@ -645,6 +536,39 @@
             mobileMenu.classList.toggle('hidden');
             iconOpen.classList.toggle('hidden');
             iconClose.classList.toggle('hidden');
+        });
+
+        // Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const roomCards  = document.querySelectorAll('.room-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
+                roomCards.forEach(card => {
+                    card.style.display = (filter === 'all' || card.getAttribute('data-type') === filter) ? 'flex' : 'none';
+                });
+            });
+        });
+
+        // Fade-up on scroll
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08 });
+
+        roomCards.forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(12px)';
+            el.style.transition = `opacity 0.4s ease ${i * 0.04}s, transform 0.4s ease ${i * 0.04}s`;
+            io.observe(el);
         });
     </script>
 </body>

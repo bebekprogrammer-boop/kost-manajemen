@@ -9,13 +9,25 @@ class PublicController extends Controller
 {
     public function index()
     {
-        // Mengambil semua kamar, diurutkan berdasarkan tipe lalu nomor kamar
-        $rooms = Room::orderBy('type')->orderBy('room_number')->get(); // [cite: 209]
-        return view('public.index', compact('rooms')); // [cite: 209]
+        // Preview: ambil 1 kamar per tipe yang tersedia (untuk beranda)
+        $previewRooms = collect();
+
+        foreach (['vvip', 'vip', 'regular'] as $type) {
+            $room = Room::where('type', $type)->orderBy('room_number')->first();
+            if ($room) $previewRooms->push($room);
+        }
+
+        return view('public.index', compact('previewRooms'));
+    }
+
+    public function rooms()
+    {
+        $rooms = Room::orderBy('type')->orderBy('room_number')->get();
+        return view('public.rooms', compact('rooms'));
     }
 
     public function showRoom(Room $room)
     {
-        return view('public.room-detail', compact('room')); // [cite: 210]
+        return view('public.room-detail', compact('room'));
     }
 }

@@ -68,8 +68,17 @@ class RoomController extends Controller
 
     public function destroy(Room $room)
     {
+        // 1. Cek penghuni aktif
         if ($room->activeTenant()->exists()) {
             return redirect()->route('admin.rooms.index')->with('error', 'Kamar tidak dapat dihapus karena masih ada penghuni aktif!');
+        }
+
+        // 2. CEK RIWAYAT DATA (Penghuni lama / Pembayaran)
+        $hasHistory = \App\Models\Tenant::where('room_id', $room->id)->exists() ||
+                      \App\Models\Payment::where('room_id', $room->id)->exists();
+
+        if ($hasHistory) {
+            return redirect()->route('admin.rooms.index')->with('error', 'Kamar gagal dihapus! Kamar ini sudah memiliki riwayat penghuni atau pembayaran. Biarkan data ini demi menjaga integritas Laporan Keuangan.');
         }
 
         // Hapus foto dari storage

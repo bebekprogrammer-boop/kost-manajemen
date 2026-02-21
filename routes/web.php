@@ -16,6 +16,7 @@ use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PublicController::class, 'index'])->name('home'); //
+Route::get('/kamar', [PublicController::class, 'rooms'])->name('rooms'); // tambahkan ini
 Route::get('/kamar/{room}', [PublicController::class, 'showRoom'])->name('room.detail'); //
 
 Route::middleware('auth')->group(function () {
