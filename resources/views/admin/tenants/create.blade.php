@@ -318,10 +318,10 @@
                     <div class="form-group">
                         <label for="rent_duration">Durasi Sewa Awal</label>
                         <select name="rent_duration" id="rent_duration" required class="form-select">
-                            <option value="1"   {{ old('rent_duration') == 1   ? 'selected' : '' }}>1 Hari (Testing H-0)</option>
-                            <option value="2"   {{ old('rent_duration') == 2   ? 'selected' : '' }}>2 Hari</option>
-                            <option value="3"   {{ old('rent_duration') == 3   ? 'selected' : '' }}>3 Hari (Testing H-3)</option>
-                            <option value="7"   {{ old('rent_duration') == 7   ? 'selected' : '' }}>7 Hari (Testing H-7)</option>
+                            <option value="1"   {{ old('rent_duration') == 1   ? 'selected' : '' }}>1 Hari (H-0)</option>
+                            <option value="2"   {{ old('rent_duration') == 2   ? 'selected' : '' }}>2 Hari (H-1)</option>
+                            <option value="3"   {{ old('rent_duration') == 3   ? 'selected' : '' }}>3 Hari (H-3)</option>
+                            <option value="7"   {{ old('rent_duration') == 7   ? 'selected' : '' }}>7 Hari (H-7)</option>
                             <option value="30"  {{ old('rent_duration') == 30  ? 'selected' : '' }}>1 Bulan (30 Hari)</option>
                             <option value="90"  {{ old('rent_duration') == 90  ? 'selected' : '' }}>3 Bulan (90 Hari)</option>
                             <option value="180" {{ old('rent_duration') == 180 ? 'selected' : '' }}>6 Bulan (180 Hari)</option>
