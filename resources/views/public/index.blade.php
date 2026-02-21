@@ -13,7 +13,6 @@
             --blue-deeper:    #172554;
             --blue-light:     #dbeafe;
             --blue-mid:       #93c5fd;
-
             --green-accent:   #fbff00;
             --green-light:    #dcfce7;
             --green-mid:      #86efac;
@@ -28,18 +27,15 @@
             color: #1e293b;
         }
 
-        /* ─── NAVBAR WRAPPER ─── */
+        /* ─── NAVBAR ─── */
         .navbar-wrapper {
-            position: fixed;        /* FIXED agar selalu di atas saat scroll */
-            top: 0;
-            left: 0;
-            right: 0;
+            position: fixed;
+            top: 0; left: 0; right: 0;
             z-index: 100;
             padding: 10px 16px;
             background: transparent;
             pointer-events: none;
         }
-
         .navbar {
             pointer-events: all;
             max-width: 1152px;
@@ -51,18 +47,22 @@
             transition: box-shadow 0.3s;
             box-shadow: 0 4px 24px rgba(29,78,216,0.10);
         }
-
-        .navbar.scrolled {
-            box-shadow: 0 8px 32px rgba(29,78,216,0.15);
-        }
-
+        .navbar.scrolled { box-shadow: 0 8px 32px rgba(29,78,216,0.15); }
         .navbar-inner {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.6rem 1.5rem;
+            padding: 0.6rem 1.25rem;
+            gap: 0.75rem;
         }
-
+        .nav-links {
+            display: none;
+            align-items: center;
+            gap: 1.75rem;
+        }
+        @media (min-width: 768px) {
+            .nav-links { display: flex; }
+        }
         .nav-link {
             position: relative;
             font-weight: 500;
@@ -86,6 +86,9 @@
         .nav-link.active { color: var(--blue-primary); }
         .nav-link.active::after { width: 100%; }
 
+        .nav-cta-wrapper { display: none; }
+        @media (min-width: 768px) { .nav-cta-wrapper { display: block; } }
+
         .btn-nav {
             display: inline-flex;
             align-items: center;
@@ -94,7 +97,7 @@
             color: #fff;
             font-weight: 700;
             font-size: 0.82rem;
-            padding: 0.5rem 1.2rem;
+            padding: 0.5rem 1.1rem;
             border-radius: 8px;
             transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
             box-shadow: 0 2px 12px rgba(29,78,216,0.25);
@@ -106,12 +109,47 @@
             box-shadow: 0 6px 20px rgba(29,78,216,0.35);
         }
 
+        .hamburger {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.4rem;
+            border-radius: 8px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+        .hamburger:hover { background: #eff6ff; }
+        @media (min-width: 768px) { .hamburger { display: none; } }
+
+        .mobile-menu {
+            display: none;
+            padding: 0.75rem 1.25rem 1rem;
+            border-top: 1px solid #e0e7ff;
+        }
+        .mobile-menu.open { display: block; }
+        .mobile-menu-link {
+            display: flex;
+            align-items: center;
+            padding: 0.65rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #475569;
+            transition: background 0.15s, color 0.15s;
+            text-decoration: none;
+        }
+        .mobile-menu-link:hover { background: #f0f4ff; color: var(--blue-primary); }
+        .mobile-menu-link.active { background: #eff6ff; color: var(--blue-primary); font-weight: 600; }
+
         /* ─── HERO ─── */
         .hero {
             background: linear-gradient(135deg, var(--blue-deeper) 0%, var(--blue-dark) 45%, #1d4ed8 100%);
             position: relative;
             overflow: hidden;
-            padding-top: 80px; /* kompensasi tinggi navbar fixed */
+            padding-top: 80px;
         }
         .hero::before {
             content: '';
@@ -140,6 +178,14 @@
             border: 1.5px solid rgba(251,255,0,0.12);
             pointer-events: none;
         }
+        @media (max-width: 640px) {
+            .hero-circle {
+                width: 260px;
+                height: 260px;
+                right: -80px;
+                top: 30%;
+            }
+        }
         .hero-circle::before {
             content: '';
             position: absolute;
@@ -155,6 +201,17 @@
             background: radial-gradient(circle, rgba(251,255,0,0.06) 0%, transparent 70%);
         }
 
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1152px;
+            margin: 0 auto;
+            padding: 2.5rem 1.25rem 4rem;
+        }
+        @media (min-width: 640px) {
+            .hero-content { padding: 3rem 1.5rem 5rem; }
+        }
+
         .hero-badge {
             display: inline-flex;
             align-items: center;
@@ -162,12 +219,13 @@
             background: rgba(251,255,0,0.10);
             border: 1px solid rgba(251,255,0,0.25);
             color: #e2e600;
-            font-size: 0.73rem;
+            font-size: 0.72rem;
             font-weight: 700;
             padding: 0.32rem 1rem;
             border-radius: 999px;
             letter-spacing: 0.07em;
             text-transform: uppercase;
+            margin-bottom: 1.25rem;
         }
         .hero-badge-dot {
             width: 7px; height: 7px;
@@ -175,6 +233,7 @@
             border-radius: 50%;
             box-shadow: 0 0 0 3px rgba(251,255,0,0.2);
             animation: pulse-dot 2s ease infinite;
+            flex-shrink: 0;
         }
         @keyframes pulse-dot {
             0%,100% { box-shadow: 0 0 0 3px rgba(251,255,0,0.2); }
@@ -182,20 +241,28 @@
         }
 
         .hero-title {
-            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-size: clamp(2rem, 7vw, 4rem);
             font-weight: 900;
             color: #fff;
             line-height: 1.08;
             letter-spacing: -0.025em;
+            margin-bottom: 1.25rem;
         }
         .hero-title .accent { color: var(--green-accent); }
 
         .hero-sub {
             color: #bfdbfe;
-            font-size: 1rem;
+            font-size: clamp(0.875rem, 2vw, 1rem);
             font-weight: 400;
             line-height: 1.75;
-            max-width: 500px;
+            max-width: 480px;
+            margin-bottom: 2.25rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
         }
 
         .btn-hero-green {
@@ -205,18 +272,18 @@
             background: var(--green-accent);
             color: #1a1a00;
             font-weight: 700;
-            font-size: 0.9rem;
-            padding: 0.75rem 1.6rem;
+            font-size: 0.875rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 10px;
             transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
             box-shadow: 0 4px 20px rgba(251,255,0,0.3);
+            white-space: nowrap;
         }
         .btn-hero-green:hover {
             background: #f0f500;
             transform: translateY(-2px);
             box-shadow: 0 8px 28px rgba(251,255,0,0.4);
         }
-
         .btn-hero-outline {
             display: inline-flex;
             align-items: center;
@@ -224,11 +291,12 @@
             background: transparent;
             color: #fff;
             font-weight: 600;
-            font-size: 0.9rem;
-            padding: 0.75rem 1.6rem;
+            font-size: 0.875rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 10px;
             border: 1.5px solid rgba(255,255,255,0.35);
             transition: background 0.2s, border-color 0.2s, transform 0.15s;
+            white-space: nowrap;
         }
         .btn-hero-outline:hover {
             background: rgba(255,255,255,0.07);
@@ -236,10 +304,10 @@
             transform: translateY(-2px);
         }
 
-        /* ─── STATS inside hero ─── */
+        /* ─── STATS ─── */
         .hero-stats {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             background: rgba(255,255,255,0.07);
             border: 1px solid rgba(255,255,255,0.12);
             border-radius: 16px;
@@ -247,31 +315,38 @@
             overflow: hidden;
             margin-top: 3rem;
         }
-        @media (max-width: 640px) {
-            .hero-stats { grid-template-columns: repeat(2, 1fr); }
+        @media (min-width: 640px) {
+            .hero-stats { grid-template-columns: repeat(4, 1fr); }
         }
         .hero-stat {
-            padding: 1.3rem 1.5rem;
+            padding: 1.25rem 1rem;
             text-align: center;
             border-right: 1px solid rgba(255,255,255,0.08);
             transition: background 0.2s;
         }
-        .hero-stat:last-child { border-right: none; }
-        @media (max-width: 640px) {
-            .hero-stat:nth-child(2) { border-right: none; }
+        .hero-stat:nth-child(2) { border-right: none; }
+        @media (min-width: 640px) {
+            .hero-stat:nth-child(2) { border-right: 1px solid rgba(255,255,255,0.08); }
+            .hero-stat:last-child { border-right: none; }
+        }
+        .hero-stat:nth-child(3),
+        .hero-stat:nth-child(4) {
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        @media (min-width: 640px) {
             .hero-stat:nth-child(3),
-            .hero-stat:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.08); }
+            .hero-stat:nth-child(4) { border-top: none; }
         }
         .hero-stat:hover { background: rgba(255,255,255,0.05); }
         .hero-stat-number {
-            font-size: 1.8rem;
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
             font-weight: 900;
             color: var(--green-accent);
             line-height: 1;
             letter-spacing: -0.02em;
         }
         .hero-stat-label {
-            font-size: 0.73rem;
+            font-size: 0.7rem;
             color: #93c5fd;
             margin-top: 0.3rem;
             font-weight: 500;
@@ -291,43 +366,78 @@
             text-transform: uppercase;
         }
         .section-title {
-            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
             font-weight: 900;
             color: #0f172a;
             letter-spacing: -0.02em;
             line-height: 1.15;
         }
 
-        /* ─── FACILITY CARDS ─── */
+        /* ─── FACILITIES ─── */
+        .facilities-section {
+            max-width: 1152px;
+            margin: 0 auto;
+            padding: 4rem 1.25rem;
+        }
+        @media (min-width: 640px) {
+            .facilities-section { padding: 5rem 1.5rem; }
+        }
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        @media (min-width: 768px) {
+            .facilities-grid { grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+        }
+
         .facility-card {
             background: #fff;
             border: 1px solid #e0e7ff;
             border-radius: 16px;
-            padding: 1.75rem 1.5rem;
+            padding: 1.25rem;
             transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.65rem;
         }
+        @media (min-width: 640px) { .facility-card { padding: 1.75rem 1.5rem; } }
         .facility-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 16px 40px rgba(29,78,216,0.1);
             border-color: var(--blue-mid);
         }
         .facility-icon {
-            width: 50px; height: 50px;
+            width: 46px; height: 46px;
             background: var(--blue-light);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
         }
-        .facility-name { font-weight: 700; font-size: 0.95rem; color: #1e293b; }
-        .facility-desc { font-size: 0.8rem; color: #64748b; line-height: 1.6; }
+        .facility-name { font-weight: 700; font-size: 0.9rem; color: #1e293b; }
+        .facility-desc { font-size: 0.78rem; color: #64748b; line-height: 1.6; }
 
         /* ─── ROOMS ─── */
         .rooms-bg { background: linear-gradient(180deg, #eff6ff 0%, #f5f7ff 100%); }
+        .rooms-section {
+            padding: 4rem 1.25rem;
+        }
+        @media (min-width: 640px) { .rooms-section { padding: 5rem 1.5rem; } }
+        .rooms-inner { max-width: 1152px; margin: 0 auto; }
+
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+        @media (min-width: 640px) {
+            .rooms-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .rooms-grid { grid-template-columns: repeat(3, 1fr); }
+        }
 
         .room-card {
             background: #fff;
@@ -346,13 +456,22 @@
             border: 2px solid var(--green-accent);
             box-shadow: 0 8px 32px rgba(251,255,0,0.15);
         }
+        /* On mobile, stack featured last so it doesn't break 2-col at 640px */
+        @media (min-width: 640px) and (max-width: 1023px) {
+            .room-card:nth-child(3) {
+                grid-column: 1 / -1;
+                max-width: 420px;
+                margin: 0 auto;
+                width: 100%;
+            }
+        }
 
         .rh-vvip    { background: linear-gradient(135deg, #1e3a8a, #1d4ed8); }
         .rh-vip     { background: linear-gradient(135deg, #1d4ed8, #3b82f6); }
         .rh-regular { background: linear-gradient(135deg, #334155, #475569); }
 
         .room-header {
-            padding: 2rem 1.5rem;
+            padding: 1.75rem 1.5rem;
             text-align: center;
             position: relative;
         }
@@ -369,7 +488,7 @@
             margin-bottom: 0.6rem;
         }
         .room-name {
-            font-size: 2.4rem;
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
             font-weight: 900;
             color: #fff;
             letter-spacing: -0.03em;
@@ -395,7 +514,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 0.55rem;
+            gap: 0.5rem;
             margin-bottom: 1.5rem;
         }
         .room-features li {
@@ -428,6 +547,7 @@
             padding: 0.75rem;
             border-radius: 10px;
             transition: opacity 0.2s, transform 0.15s;
+            text-decoration: none;
         }
         .room-cta:hover { transform: translateY(-1px); opacity: 0.9; }
         .cta-blue-dark { background: #1e3a8a; color: #fff; }
@@ -435,6 +555,26 @@
         .cta-slate     { background: #334155; color: #fff; }
 
         /* ─── ABOUT ─── */
+        .about-section {
+            max-width: 1152px;
+            margin: 0 auto;
+            padding: 4rem 1.25rem;
+        }
+        @media (min-width: 640px) { .about-section { padding: 5rem 1.5rem; } }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .about-grid { grid-template-columns: 1fr 1fr; gap: 3.5rem; }
+        }
+        .about-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
         .about-stat-card {
             padding: 1.25rem;
             border-radius: 14px;
@@ -442,7 +582,7 @@
             border: 1px solid #bfdbfe;
         }
         .about-stat-num {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
             font-weight: 900;
             color: var(--blue-primary);
             letter-spacing: -0.02em;
@@ -450,6 +590,7 @@
         }
         .about-stat-label { font-size: 0.75rem; color: #64748b; margin-top: 0.3rem; font-weight: 500; }
 
+        .info-cards-stack { display: flex; flex-direction: column; gap: 0.75rem; }
         .info-card {
             display: flex;
             align-items: flex-start;
@@ -457,30 +598,71 @@
             background: #fff;
             border: 1px solid #e0e7ff;
             border-radius: 14px;
-            padding: 1.2rem 1.25rem;
+            padding: 1.1rem 1.25rem;
             transition: border-color 0.2s, box-shadow 0.2s;
+            text-decoration: none;
         }
         .info-card:hover {
             border-color: var(--green-mid);
             box-shadow: 0 4px 18px rgba(29,78,216,0.07);
         }
         .info-icon {
-            width: 44px; height: 44px;
+            width: 42px; height: 42px;
             background: var(--blue-light);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             flex-shrink: 0;
         }
-        .info-title { font-weight: 700; font-size: 0.9rem; color: #1e293b; margin-bottom: 0.2rem; }
-        .info-text  { font-size: 0.8rem; color: #64748b; line-height: 1.5; }
+        .info-title { font-weight: 700; font-size: 0.875rem; color: #1e293b; margin-bottom: 0.2rem; }
+        .info-text  { font-size: 0.78rem; color: #64748b; line-height: 1.5; }
 
         /* ─── FOOTER ─── */
         footer { background: #0f172a; }
-        .footer-link { font-size: 0.875rem; color: #64748b; transition: color 0.2s; }
+        .footer-inner {
+            max-width: 1152px;
+            margin: 0 auto;
+            padding: 3rem 1.25rem;
+        }
+        @media (min-width: 640px) { .footer-inner { padding: 3rem 1.5rem; } }
+        .footer-top {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #1e293b;
+        }
+        @media (min-width: 640px) {
+            .footer-top {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-link { font-size: 0.875rem; color: #64748b; transition: color 0.2s; text-decoration: none; }
         .footer-link:hover { color: var(--green-accent); }
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding-top: 1.5rem;
+            align-items: flex-start;
+        }
+        @media (min-width: 640px) {
+            .footer-bottom {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0;
+            }
+        }
 
         /* ─── ANIMATIONS ─── */
         @keyframes fadeUp {
@@ -497,43 +679,49 @@
         ::-webkit-scrollbar-track { background: #eff6ff; }
         ::-webkit-scrollbar-thumb { background: var(--blue-mid); border-radius: 999px; }
 
-        /* Mobile menu dalam navbar rounded */
-        .mobile-menu-inner {
-            padding: 0.75rem 1.5rem 1rem;
-            border-top: 1px solid #e0e7ff;
+        /* ─── SECTION HEADING UTIL ─── */
+        .section-heading {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-heading p {
+            max-width: 340px;
+            margin: 0.6rem auto 0;
+            font-size: 0.875rem;
+            color: #64748b;
         }
     </style>
 </head>
 <body>
 
-    <!-- ════ NAVBAR FLOATING (di luar hero, position: fixed) ════ -->
-    <div class="navbar-wrapper" id="navbar-wrapper">
+    <!-- ════ NAVBAR ════ -->
+    <div class="navbar-wrapper">
         <nav class="navbar" id="navbar">
             <div class="navbar-inner">
 
                 <!-- Brand -->
-                <a href="{{ route('home') }}" class="flex items-center gap-2.5">
+                <a href="{{ route('home') }}" style="display:flex;align-items:center;gap:0.6rem;text-decoration:none;flex-shrink:0;">
                     <div style="width:32px;height:32px;background:var(--blue-primary);border-radius:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(29,78,216,0.3);">
                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
                             <polyline points="9 22 9 12 15 12 15 22"/>
                         </svg>
                     </div>
-                    <span style="font-weight:900;font-size:1.05rem;color:var(--blue-dark);letter-spacing:-0.01em;">
+                    <span style="font-weight:900;font-size:1rem;color:var(--blue-dark);letter-spacing:-0.01em;line-height:1.2;">
                         {{ env('KOST_NAME', 'KOST-MANAJEMEN') }}
                     </span>
                 </a>
 
                 <!-- Desktop Nav Links -->
-                <div class="items-center hidden gap-7 md:flex">
+                <div class="nav-links">
                     <a href="{{ route('home') }}" class="nav-link active">Beranda</a>
                     <a href="{{ route('rooms') }}" class="nav-link">Kamar</a>
                     <a href="#fasilitas" class="nav-link">Fasilitas</a>
                     <a href="#tentang" class="nav-link">Tentang</a>
                 </div>
 
-                <!-- CTA -->
-                <div class="hidden md:block">
+                <!-- Desktop CTA -->
+                <div class="nav-cta-wrapper">
                     @auth
                         <a href="{{ route('admin.dashboard') }}" class="btn-nav">
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
@@ -548,28 +736,28 @@
                 </div>
 
                 <!-- Hamburger -->
-                <button id="hamburger" class="p-1.5 transition rounded-lg md:hidden hover:bg-blue-50">
-                    <svg id="icon-open" class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <svg id="icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
                     </svg>
-                    <svg id="icon-close" class="hidden w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    <svg id="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
                     </svg>
                 </button>
             </div>
 
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden mobile-menu-inner md:hidden">
-                <div class="space-y-1">
-                    <a href="{{ route('home') }}" class="flex py-2.5 px-3 rounded-lg text-blue-700 font-semibold bg-blue-50 text-sm">Beranda</a>
-                    <a href="{{ route('rooms') }}" class="flex py-2.5 px-3 rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-sm transition">Kamar</a>
-                    <a href="#fasilitas" class="flex py-2.5 px-3 rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-sm transition">Fasilitas</a>
-                    <a href="#tentang" class="flex py-2.5 px-3 rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-sm transition">Tentang</a>
-                    <div class="pt-2">
+            <div class="mobile-menu" id="mobile-menu">
+                <div style="display:flex;flex-direction:column;gap:0.2rem;">
+                    <a href="{{ route('home') }}" class="mobile-menu-link active">🏠 Beranda</a>
+                    <a href="{{ route('rooms') }}" class="mobile-menu-link">🛏 Kamar</a>
+                    <a href="#fasilitas" class="mobile-menu-link">✨ Fasilitas</a>
+                    <a href="#tentang" class="mobile-menu-link">ℹ️ Tentang</a>
+                    <div style="padding-top:0.75rem;">
                         @auth
-                            <a href="{{ route('admin.dashboard') }}" class="flex justify-center w-full btn-nav">Dashboard Admin</a>
+                            <a href="{{ route('admin.dashboard') }}" class="btn-nav" style="display:flex;justify-content:center;width:100%;">Dashboard Admin</a>
                         @else
-                            <a href="{{ route('login') }}" class="flex justify-center w-full btn-nav">Login Admin</a>
+                            <a href="{{ route('login') }}" class="btn-nav" style="display:flex;justify-content:center;width:100%;">Login Admin</a>
                         @endauth
                     </div>
                 </div>
@@ -583,23 +771,22 @@
         <div class="hero-grid"></div>
         <div class="hero-circle"></div>
 
-        <!-- Hero Content -->
-        <div class="relative z-10 max-w-6xl px-6 pt-10 pb-16 mx-auto">
-            <div class="max-w-2xl fade-up">
-                <div class="mb-5 hero-badge">
+        <div class="hero-content">
+            <div class="fade-up" style="max-width:600px;">
+                <div class="hero-badge">
                     <span class="hero-badge-dot"></span>
-                    Hunian Terpercaya & Nyaman
+                    Hunian Terpercaya &amp; Nyaman
                 </div>
-                <h1 class="mb-5 hero-title">
+                <h1 class="hero-title">
                     Temukan Rumah<br>
                     <span class="accent">Kedua</span> Kamu<br>
                     di Sini
                 </h1>
-                <p class="hero-sub mb-9">
+                <p class="hero-sub">
                     {{ env('KOST_ADDRESS', 'Lokasi strategis, fasilitas lengkap') }} —
                     pilihan hunian ideal untuk mahasiswa dan pekerja modern.
                 </p>
-                <div class="flex flex-wrap gap-3">
+                <div class="hero-buttons">
                     <a href="{{ route('rooms') }}" class="btn-hero-green">
                         Lihat Semua Kamar
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -616,7 +803,7 @@
                 </div>
                 <div class="hero-stat">
                     <div class="hero-stat-number">100%</div>
-                    <div class="hero-stat-label">Kepuasan Penghuni</div>
+                    <div class="hero-stat-label">Kepuasan</div>
                 </div>
                 <div class="hero-stat">
                     <div class="hero-stat-number">24/7</div>
@@ -628,179 +815,182 @@
                 </div>
             </div>
         </div>
-
     </div>
     <!-- END HERO -->
 
     <!-- ════ FASILITAS ════ -->
-    <section id="fasilitas" class="max-w-6xl px-6 py-20 mx-auto">
-        <div class="mb-12 text-center">
-            <span class="section-pill">Fasilitas</span>
-            <h2 class="mt-3 mb-3 section-title">Semua yang Kamu Butuhkan</h2>
-            <p class="max-w-sm mx-auto text-sm text-slate-500">Fasilitas lengkap agar kamu bisa fokus tanpa khawatir soal kebutuhan sehari-hari.</p>
-        </div>
-        <div class="grid grid-cols-2 gap-5 md:grid-cols-4">
-            <div class="facility-card">
-                <div class="facility-icon">📶</div>
-                <p class="facility-name">WiFi Cepat</p>
-                <p class="facility-desc">Koneksi stabil untuk kerja dan belajar tanpa gangguan.</p>
+    <section id="fasilitas">
+        <div class="facilities-section">
+            <div class="section-heading">
+                <span class="section-pill">Fasilitas</span>
+                <h2 class="section-title" style="margin-top:0.75rem;margin-bottom:0.5rem;">Semua yang Kamu Butuhkan</h2>
+                <p>Fasilitas lengkap agar kamu bisa fokus tanpa khawatir soal kebutuhan sehari-hari.</p>
             </div>
-            <div class="facility-card">
-                <div class="facility-icon">📹</div>
-                <p class="facility-name">CCTV 24 Jam</p>
-                <p class="facility-desc">Pengawasan penuh demi keamanan seluruh penghuni.</p>
-            </div>
-            <div class="facility-card">
-                <div class="facility-icon">🅿️</div>
-                <p class="facility-name">Parkir Luas</p>
-                <p class="facility-desc">Area parkir aman untuk motor dan mobil penghuni.</p>
-            </div>
-            <div class="facility-card">
-                <div class="facility-icon">🧹</div>
-                <p class="facility-name">Pembersihan Rutin</p>
-                <p class="facility-desc">Lingkungan bersih terjaga dengan jadwal berkala.</p>
+            <div class="facilities-grid">
+                <div class="facility-card">
+                    <div class="facility-icon">📶</div>
+                    <p class="facility-name">WiFi Cepat</p>
+                    <p class="facility-desc">Koneksi stabil untuk kerja dan belajar tanpa gangguan.</p>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-icon">📹</div>
+                    <p class="facility-name">CCTV 24 Jam</p>
+                    <p class="facility-desc">Pengawasan penuh demi keamanan seluruh penghuni.</p>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-icon">🅿️</div>
+                    <p class="facility-name">Parkir Luas</p>
+                    <p class="facility-desc">Area parkir aman untuk motor dan mobil penghuni.</p>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-icon">🧹</div>
+                    <p class="facility-name">Pembersihan Rutin</p>
+                    <p class="facility-desc">Lingkungan bersih terjaga dengan jadwal berkala.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- ════ TIPE KAMAR ════ -->
-    <section class="px-6 py-20 rooms-bg">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-12 text-center">
-                <span class="section-pill">Pilihan Kamar</span>
-                <h2 class="mt-3 mb-3 section-title">Tersedia Berbagai Tipe</h2>
-                <p class="max-w-sm mx-auto text-sm text-slate-500">Pilih kamar yang paling sesuai dengan kebutuhan dan anggaranmu.</p>
-            </div>
-
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-
-                <!-- VVIP -->
-                <div class="room-card">
-                    <div class="room-header rh-vvip">
-                        <span class="room-type-tag">Tipe</span>
-                        <div class="room-name">VVIP</div>
-                        <p class="room-tagline">Pengalaman premium terbaik</p>
-                    </div>
-                    <div class="room-body">
-                        <ul class="room-features">
-                            <li><span class="check-icon check-blue">✓</span> AC & Kipas Angin</li>
-                            <li><span class="check-icon check-blue">✓</span> Kamar Mandi Dalam</li>
-                            <li><span class="check-icon check-blue">✓</span> Kasur Spring Bed</li>
-                            <li><span class="check-icon check-blue">✓</span> Lemari Pakaian</li>
-                            <li><span class="check-icon check-green">✓</span> WiFi Dedicated</li>
-                            <li><span class="check-icon check-green">✓</span> TV & Kulkas</li>
-                        </ul>
-                        <a href="{{ route('rooms') }}?type=vvip" class="room-cta cta-blue-dark">
-                            Jelajahi Kamar VVIP →
-                        </a>
-                    </div>
+    <section class="rooms-bg">
+        <div class="rooms-section">
+            <div class="rooms-inner">
+                <div class="section-heading">
+                    <span class="section-pill">Pilihan Kamar</span>
+                    <h2 class="section-title" style="margin-top:0.75rem;margin-bottom:0.5rem;">Tersedia Berbagai Tipe</h2>
+                    <p>Pilih kamar yang paling sesuai dengan kebutuhan dan anggaranmu.</p>
                 </div>
 
-                <!-- VIP (featured) -->
-                <div class="room-card featured">
-                    <div class="room-header rh-vip">
-                        <span class="popular-tag">⭐ Populer</span>
-                        <span class="room-type-tag">Tipe</span>
-                        <div class="room-name">VIP</div>
-                        <p class="room-tagline">Nyaman dengan fasilitas lengkap</p>
+                <div class="rooms-grid">
+                    <!-- VVIP -->
+                    <div class="room-card">
+                        <div class="room-header rh-vvip">
+                            <span class="room-type-tag">Tipe</span>
+                            <div class="room-name">VVIP</div>
+                            <p class="room-tagline">Pengalaman premium terbaik</p>
+                        </div>
+                        <div class="room-body">
+                            <ul class="room-features">
+                                <li><span class="check-icon check-blue">✓</span> AC &amp; Kipas Angin</li>
+                                <li><span class="check-icon check-blue">✓</span> Kamar Mandi Dalam</li>
+                                <li><span class="check-icon check-blue">✓</span> Kasur Spring Bed</li>
+                                <li><span class="check-icon check-blue">✓</span> Lemari Pakaian</li>
+                                <li><span class="check-icon check-green">✓</span> WiFi Dedicated</li>
+                                <li><span class="check-icon check-green">✓</span> TV &amp; Kulkas</li>
+                            </ul>
+                            <a href="{{ route('rooms') }}?type=vvip" class="room-cta cta-blue-dark">
+                                Jelajahi Kamar VVIP →
+                            </a>
+                        </div>
                     </div>
-                    <div class="room-body">
-                        <ul class="room-features">
-                            <li><span class="check-icon check-blue">✓</span> AC</li>
-                            <li><span class="check-icon check-blue">✓</span> Kamar Mandi Dalam</li>
-                            <li><span class="check-icon check-blue">✓</span> Kasur Spring Bed</li>
-                            <li><span class="check-icon check-blue">✓</span> Lemari Pakaian</li>
-                            <li><span class="check-icon check-green">✓</span> WiFi Cepat</li>
-                            <li><span class="check-icon check-green">✓</span> Meja Belajar</li>
-                        </ul>
-                        <a href="{{ route('rooms') }}?type=vip" class="room-cta cta-blue">
-                            Jelajahi Kamar VIP →
-                        </a>
+
+                    <!-- VIP (featured) -->
+                    <div class="room-card featured">
+                        <div class="room-header rh-vip">
+                            <span class="popular-tag">⭐ Populer</span>
+                            <span class="room-type-tag">Tipe</span>
+                            <div class="room-name">VIP</div>
+                            <p class="room-tagline">Nyaman dengan fasilitas lengkap</p>
+                        </div>
+                        <div class="room-body">
+                            <ul class="room-features">
+                                <li><span class="check-icon check-blue">✓</span> AC</li>
+                                <li><span class="check-icon check-blue">✓</span> Kamar Mandi Dalam</li>
+                                <li><span class="check-icon check-blue">✓</span> Kasur Spring Bed</li>
+                                <li><span class="check-icon check-blue">✓</span> Lemari Pakaian</li>
+                                <li><span class="check-icon check-green">✓</span> WiFi Cepat</li>
+                                <li><span class="check-icon check-green">✓</span> Meja Belajar</li>
+                            </ul>
+                            <a href="{{ route('rooms') }}?type=vip" class="room-cta cta-blue">
+                                Jelajahi Kamar VIP →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Reguler -->
+                    <div class="room-card">
+                        <div class="room-header rh-regular">
+                            <span class="room-type-tag">Tipe</span>
+                            <div class="room-name">Reguler</div>
+                            <p class="room-tagline">Hemat &amp; tetap nyaman</p>
+                        </div>
+                        <div class="room-body">
+                            <ul class="room-features">
+                                <li><span class="check-icon check-gray">✓</span> Kipas Angin</li>
+                                <li><span class="check-icon check-gray">✓</span> Kamar Mandi Luar</li>
+                                <li><span class="check-icon check-gray">✓</span> Kasur Busa</li>
+                                <li><span class="check-icon check-gray">✓</span> Lemari Pakaian</li>
+                                <li><span class="check-icon check-gray">✓</span> WiFi Bersama</li>
+                                <li><span class="check-icon check-gray">✓</span> Meja Belajar</li>
+                            </ul>
+                            <a href="{{ route('rooms') }}?type=regular" class="room-cta cta-slate">
+                                Jelajahi Kamar Reguler →
+                            </a>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Reguler -->
-                <div class="room-card">
-                    <div class="room-header rh-regular">
-                        <span class="room-type-tag">Tipe</span>
-                        <div class="room-name">Reguler</div>
-                        <p class="room-tagline">Hemat & tetap nyaman</p>
-                    </div>
-                    <div class="room-body">
-                        <ul class="room-features">
-                            <li><span class="check-icon check-gray">✓</span> Kipas Angin</li>
-                            <li><span class="check-icon check-gray">✓</span> Kamar Mandi Luar</li>
-                            <li><span class="check-icon check-gray">✓</span> Kasur Busa</li>
-                            <li><span class="check-icon check-gray">✓</span> Lemari Pakaian</li>
-                            <li><span class="check-icon check-gray">✓</span> WiFi Bersama</li>
-                            <li><span class="check-icon check-gray">✓</span> Meja Belajar</li>
-                        </ul>
-                        <a href="{{ route('rooms') }}?type=regular" class="room-cta cta-slate">
-                            Jelajahi Kamar Reguler →
-                        </a>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
 
     <!-- ════ TENTANG KAMI ════ -->
-    <section id="tentang" class="max-w-6xl px-6 py-20 mx-auto">
-        <div class="grid items-center grid-cols-1 md:grid-cols-2 gap-14">
-            <div>
-                <span class="section-pill">Tentang Kami</span>
-                <h2 class="mt-3 mb-5 section-title">{{ env('KOST_NAME', 'Kost Kami') }}</h2>
-                <p class="mb-4 text-sm leading-relaxed text-slate-500">
-                    Kami menyediakan hunian nyaman dengan fasilitas lengkap di lokasi yang strategis.
-                    Cocok untuk mahasiswa maupun pekerja yang menginginkan tempat tinggal yang bersih,
-                    aman, dan terjangkau.
-                </p>
-                <p class="mb-8 text-sm leading-relaxed text-slate-500">
-                    Dengan pengalaman bertahun-tahun, kami berkomitmen memberikan pelayanan terbaik
-                    dan lingkungan yang kondusif bagi seluruh penghuni.
-                </p>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="about-stat-card">
-                        <div class="about-stat-num">{{ $previewRooms->count() }}+</div>
-                        <div class="about-stat-label">Tipe Kamar Tersedia</div>
-                    </div>
-                    <div class="about-stat-card">
-                        <div class="about-stat-num">100%</div>
-                        <div class="about-stat-label">Kepuasan Penghuni</div>
+    <section id="tentang">
+        <div class="about-section">
+            <div class="about-grid">
+                <div>
+                    <span class="section-pill">Tentang Kami</span>
+                    <h2 class="section-title" style="margin-top:0.75rem;margin-bottom:1.25rem;">{{ env('KOST_NAME', 'Kost Kami') }}</h2>
+                    <p style="margin-bottom:1rem;font-size:0.875rem;line-height:1.75;color:#64748b;">
+                        Kami menyediakan hunian nyaman dengan fasilitas lengkap di lokasi yang strategis.
+                        Cocok untuk mahasiswa maupun pekerja yang menginginkan tempat tinggal yang bersih,
+                        aman, dan terjangkau.
+                    </p>
+                    <p style="margin-bottom:2rem;font-size:0.875rem;line-height:1.75;color:#64748b;">
+                        Dengan pengalaman bertahun-tahun, kami berkomitmen memberikan pelayanan terbaik
+                        dan lingkungan yang kondusif bagi seluruh penghuni.
+                    </p>
+                    <div class="about-stats-grid">
+                        <div class="about-stat-card">
+                            <div class="about-stat-num">{{ $previewRooms->count() }}+</div>
+                            <div class="about-stat-label">Tipe Kamar Tersedia</div>
+                        </div>
+                        <div class="about-stat-card">
+                            <div class="about-stat-num">100%</div>
+                            <div class="about-stat-label">Kepuasan Penghuni</div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="space-y-3">
-                <div class="info-card">
-                    <div class="info-icon">📍</div>
-                    <div>
-                        <p class="info-title">Lokasi Strategis</p>
-                        <p class="info-text">{{ env('KOST_ADDRESS', 'Alamat belum diatur') }}</p>
+                <div class="info-cards-stack">
+                    <div class="info-card">
+                        <div class="info-icon">📍</div>
+                        <div>
+                            <p class="info-title">Lokasi Strategis</p>
+                            <p class="info-text">{{ env('KOST_ADDRESS', 'Alamat belum diatur') }}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">📞</div>
-                    <div>
-                        <p class="info-title">Hubungi Kami</p>
-                        <p class="info-text">+{{ env('ADMIN_PHONE', 'Nomor belum diatur') }}</p>
+                    <div class="info-card">
+                        <div class="info-icon">📞</div>
+                        <div>
+                            <p class="info-title">Hubungi Kami</p>
+                            <p class="info-text">+{{ env('ADMIN_PHONE', 'Nomor belum diatur') }}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">🕐</div>
-                    <div>
-                        <p class="info-title">Jam Operasional</p>
-                        <p class="info-text">Senin – Minggu, 08.00 – 21.00 WIB</p>
+                    <div class="info-card">
+                        <div class="info-icon">🕐</div>
+                        <div>
+                            <p class="info-title">Jam Operasional</p>
+                            <p class="info-text">Senin – Minggu, 08.00 – 21.00 WIB</p>
+                        </div>
                     </div>
-                </div>
-                <div class="info-card" style="border-color:#bbf7d0;background:#f0fdf4;">
-                    <div class="info-icon" style="background:var(--green-light);">✉️</div>
-                    <div>
-                        <p class="info-title">Tertarik Bergabung?</p>
-                        <a href="{{ route('rooms') }}" style="color:var(--green-dark);font-size:0.8rem;font-weight:700;display:inline-flex;align-items:center;gap:4px;margin-top:2px;">
-                            Lihat kamar tersedia →
-                        </a>
+                    <div class="info-card" style="border-color:#bbf7d0;background:#f0fdf4;">
+                        <div class="info-icon" style="background:var(--green-light);">✉️</div>
+                        <div>
+                            <p class="info-title">Tertarik Bergabung?</p>
+                            <a href="{{ route('rooms') }}" style="color:var(--green-dark);font-size:0.8rem;font-weight:700;display:inline-flex;align-items:center;gap:4px;margin-top:2px;text-decoration:none;">
+                                Lihat kamar tersedia →
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -808,18 +998,18 @@
     </section>
 
     <!-- ════ FOOTER ════ -->
-    <footer class="px-6 py-12">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col items-start justify-between gap-6 pb-8 md:flex-row md:items-center" style="border-bottom:1px solid #1e293b;">
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-top">
                 <div>
-                    <div class="flex items-center gap-2.5 mb-2">
+                    <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.5rem;">
                         <div style="width:30px;height:30px;background:var(--blue-primary);border-radius:8px;display:flex;align-items:center;justify-content:center;">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
                                 <polyline points="9 22 9 12 15 12 15 22"/>
                             </svg>
                         </div>
-                        <span style="font-weight:900;font-size:1.05rem;color:#fff;letter-spacing:-0.01em;">
+                        <span style="font-weight:900;font-size:1rem;color:#fff;letter-spacing:-0.01em;">
                             {{ env('KOST_NAME', 'KOST-MANAJEMEN') }}
                         </span>
                     </div>
@@ -827,14 +1017,14 @@
                         {{ env('KOST_ADDRESS', '') }}
                     </p>
                 </div>
-                <div class="flex items-center gap-6">
+                <div class="footer-links">
                     <a href="{{ route('home') }}" class="footer-link">Beranda</a>
                     <a href="{{ route('rooms') }}" class="footer-link">Kamar</a>
                     <a href="#fasilitas" class="footer-link">Fasilitas</a>
                     <a href="#tentang" class="footer-link">Tentang</a>
                 </div>
             </div>
-            <div class="flex flex-col items-center justify-between gap-3 pt-6 md:flex-row">
+            <div class="footer-bottom">
                 <p style="font-size:0.78rem;color:#475569;">&copy; {{ date('Y') }} {{ env('KOST_NAME', 'KOST-MANAJEMEN') }}. All rights reserved.</p>
                 <p style="font-size:0.78rem;color:#334155;">Dibuat dengan <span style="color:var(--green-accent);">♥</span> untuk penghuni terbaik</p>
             </div>
@@ -848,31 +1038,41 @@
             navbar.classList.toggle('scrolled', window.scrollY > 20);
         });
 
-        // Hamburger
+        // Hamburger toggle
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobile-menu');
         const iconOpen   = document.getElementById('icon-open');
         const iconClose  = document.getElementById('icon-close');
+
         hamburger.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            iconOpen.classList.toggle('hidden');
-            iconClose.classList.toggle('hidden');
+            const isOpen = mobileMenu.classList.toggle('open');
+            iconOpen.style.display  = isOpen ? 'none'  : 'block';
+            iconClose.style.display = isOpen ? 'block' : 'none';
         });
 
-        // Smooth scroll
+        // Close mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                iconOpen.style.display  = 'block';
+                iconClose.style.display = 'none';
+            });
+        });
+
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     e.preventDefault();
-                    const offset = 80;
+                    const offset = 84;
                     const top = target.getBoundingClientRect().top + window.scrollY - offset;
                     window.scrollTo({ top, behavior: 'smooth' });
                 }
             });
         });
 
-        // Scroll-triggered fade-up
+        // Scroll-triggered fade-up for cards
         const io = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -881,9 +1081,9 @@
                     io.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.08 });
 
-        document.querySelectorAll('.facility-card, .room-card, .info-card').forEach((el, i) => {
+        document.querySelectorAll('.facility-card, .room-card, .info-card, .about-stat-card').forEach((el, i) => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(18px)';
             el.style.transition = `opacity 0.5s ease ${i * 0.06}s, transform 0.5s ease ${i * 0.06}s`;
